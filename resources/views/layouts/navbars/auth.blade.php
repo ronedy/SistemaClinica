@@ -40,7 +40,7 @@
             <li class="{{ $elementActive == 'doctores' ? 'active' : '' }}">
                 <a href="{{ route('doctor.index') }}">
                     <i class="nc-icon nc-user-run"></i>
-                    <p>{{ __('Médico') }}</p>
+                    <p>{{ __('Doctores') }}</p>
                 </a>
             </li>
             {{-- <li class="{{ $elementActive == 'seguros' ? 'active' : '' }}">
