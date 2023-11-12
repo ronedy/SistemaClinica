@@ -4502,6 +4502,10 @@ License - nucleoapp.com/license/
   content: "\ea60";
 }
 
+.nc-doctor::before {
+  content: "\ea60";
+}
+
 .nc-vector::before {
   content: "\ea61";
 }

@@ -26,7 +26,9 @@ class PageController extends Controller
     public function index(string $page)
     {
         $citas = cita::where('estado', '=', 1)
-                ->where('fecha_citada', '>=', now()->format('Y-m-d'))
+                //->where('fecha_citada', '>=', now()->format('Y-m-d'))
+                ->orderBy('fecha_citada', 'DESC')
+                ->orderBy('hora_citada', 'DESC')
                 ->get();
 
         if (view()->exists("pages.{$page}")) {

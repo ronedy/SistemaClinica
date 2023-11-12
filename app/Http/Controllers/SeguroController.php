@@ -16,10 +16,11 @@ class SeguroController extends Controller
      */
     public function index()
     {
-            // obtenemos todos los seguros con estado 1 es decir activos
-            $seguros = seguro::where('estado', 1)->get();
+        $seguros = seguro::where('estado', 1)
+            ->orderBy('descripcion', 'ASC')
+            ->paginate(10);
 
-        return view('seguro.index',     compact('seguros') );
+        return view('seguro.index', compact('seguros') );
     }
 
     /**

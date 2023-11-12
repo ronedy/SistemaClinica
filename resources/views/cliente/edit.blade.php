@@ -27,22 +27,53 @@
                         @method('put')
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-5">
+                                    <label for="selectGeneros">Genéro: (*)</label>
+                                    <select class="form-control" name="genero" id="selectGeneros">
+                                        <option value="Hombre" {{ old('genero', $cliente->genero) == 'Hombre' ? 'selected' : '' }}>Masculino</option>
+                                        <option value="Femenina" {{ old('genero', $cliente->genero) == 'Femenina' ? 'selected' : '' }}>Femenina</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-md-4">
                                     <div class="form-group{{ $errors->has('nombre') ? ' has-danger' : '' }}">
+                                        <label for="nombre">Nombre: (*)</label>
                                         <input class="form-control{{ $errors->has('nombre') ? ' is-invalid' : '' }}"
                                             name="nombre" id="nombre" type="text" placeholder="{{ __('Nombre') }}"
                                             value="{{ old('nombre', $cliente->nombre) }}" aria-required="true" required/>
                                     </div>
                                 </div>
-                                <div class="col-md-3">
+                                <div class="col-md-4">
                                     <div class="form-group{{ $errors->has('apellido') ? ' has-danger' : '' }}">
+                                        <label for="apellido">Apellido: (*)</label>
                                         <input class="form-control{{ $errors->has('apellido') ? ' is-invalid' : '' }}"
                                             name="apellido" id="apellido" type="text" placeholder="{{ __('Apellido') }}"
                                             value="{{ old('apellido', $cliente->apellido) }}" aria-required="true" required/>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-3">
+                                    <div class="form-group{{ $errors->has('dpi') ? ' has-danger' : '' }}">
+                                        <label for="dpi">DPI:</label>
+                                        <input class="form-control{{ $errors->has('dpi') ? ' is-invalid' : '' }}"
+                                            name="dpi" id="dpi" type="text" placeholder="{{ __('DPI') }}"
+                                            value="{{ old('dpi', $cliente->dpi) }}" aria-required="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group{{ $errors->has('telefono') ? ' has-danger' : '' }}">
+                                        <label for="telefono">Teléfono: (*)</label>
+                                        <input class="form-control{{ $errors->has('telefono') ? ' is-invalid' : '' }}"
+                                            name="telefono" id="telefono" type="text" placeholder="{{ __('Telefono') }}"
+                                            value="{{ old('telefono', $cliente->telefono) }}" aria-required="true" required/>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
                                     <div class="form-group{{ $errors->has('direccion') ? ' has-danger' : '' }}">
+                                        <label for="direccion">Dirección: (*)</label>
                                         <input class="form-control{{ $errors->has('direccion') ? ' is-invalid' : '' }}"
                                             name="direccion" id="direccion" type="text" placeholder="{{ __('Dirección') }}"
                                             value="{{ old('direccion', $cliente->direccion) }}" aria-required="true" required maxlength="100"/>
@@ -50,34 +81,39 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <div class="form-group{{ $errors->has('telefono') ? ' has-danger' : '' }}">
-                                        <input class="form-control{{ $errors->has('telefono') ? ' is-invalid' : '' }}"
-                                            name="telefono" id="telefono" type="text" placeholder="{{ __('Telefono') }}"
-                                            value="{{ old('telefono', $cliente->telefono) }}" aria-required="true" required/>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="form-group{{ $errors->has('dpi') ? ' has-danger' : '' }}">
-                                        <input class="form-control{{ $errors->has('dpi') ? ' is-invalid' : '' }}"
-                                            name="dpi" id="dpi" type="text" placeholder="{{ __('DPI') }}"
-                                            value="{{ old('dpi', $cliente->dpi) }}" aria-required="true" required/>
+                                <div class="col-md-4">
+                                    <div class="form-group{{ $errors->has('fecha_nacimiento') ? ' has-danger' : '' }}">
+                                        <label for="fecha_nacimiento">Fecha de nacimiento: *</label>
+                                        <input class="form-control{{ $errors->has('fecha_nacimiento') ? ' is-invalid' : '' }}"
+                                            name="fecha_nacimiento" id="fecha_nacimiento" type="date"
+                                            value="{{ old('fecha_nacimiento', $cliente->fecha_nacimiento) }}" aria-required="true"/>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
-                                    <div class="form-group{{ $errors->has('correo') ? ' has-danger' : '' }}">
-                                        <input class="form-control{{ $errors->has('correo') ? ' is-invalid' : '' }}"
-                                            name="correo" id="correo" type="correo" placeholder="{{ __('E-mail') }}"
-                                            value="{{ old('correo', $cliente->correo) }}" aria-required="true" required/>
+                                    <div class="form-group{{ $errors->has('estado_civil') ? ' has-danger' : '' }}">
+                                        <label for="selectEstadoCivil">Estado Civil: (*)</label>
+                                        <select class="form-control" name="estado_civil" id="selectEstadoCivil">
+                                            <option value="Soltero(a)" {{ $cliente->estado_civil == 'Soltero(a)' ? 'selected' : '' }}>Soltero(a)</option>
+                                            <option value="Casado(a)" {{ $cliente->estado_civil == 'Casado(a)' ? 'selected' : '' }}>Casado(a)</option>
+                                            <option value="Divorciado(a)" {{ $cliente->estado_civil == 'Divorciado(a)' ? 'selected' : '' }}>Divorciado(a)</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group{{ $errors->has('alfabeta') ? ' has-danger' : '' }}">
+                                        <label for="alfabeta">Alfabeta: (*)</label>
+                                        <input class="form-control" type="text" name="alfabeta" id="alfabeta" value="{{  old('alfabeta', $cliente->alfabeta) }}">
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-3">
-                                    <d, class="form-group{{ $errors->has('fecha_nacimiento') ? ' has-danger' : '' }}">
-                                        <input class="form-control{{ $errors->has('fecha_nacimiento') ? ' is-invalid' : '' }}"
-                                            name="fecha_nacimiento" id="fecha_nacimiento" type="date" placeholder="{{ __('Fecha de nacimiento') }}" value="{{ old('fecha_naciamiento', $cliente->fecha_nacimiento) }}" aria-required="true" required/>
-                                    </d, $cliente-></iv>
+                                <div class="col-md-4">
+                                    <div class="form-group{{ $errors->has('correo') ? ' has-danger' : '' }}">
+                                        <label for="correo">Correo:</label>
+                                        <input class="form-control{{ $errors->has('correo') ? ' is-invalid' : '' }}"
+                                            name="correo" id="correo" type="email" placeholder="{{ __('E-mail') }}"
+                                            value="{{ old('correo', $cliente->correo) }}" aria-required="true"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>

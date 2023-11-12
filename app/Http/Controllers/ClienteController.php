@@ -16,7 +16,10 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = cliente::where('estado', 1)->get(); // para clientes solo activos
+        $clientes = cliente::where('estado', 1)
+            ->orderBy('id', 'DESC')
+            ->paginate(10);
+
         return view('cliente.index', compact('clientes'));
     }
 
@@ -39,13 +42,16 @@ class ClienteController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'genero' => 'required',
             'nombre' => 'required|max:100',
             'apellido' => 'required|max:100',
             'direccion' => 'required|max:100',
             'telefono' => 'required|max:100',
-            'correo' => 'required|max:100',
-            'fecha_nacimiento' => 'required',
-            'dpi' => 'required|max:255',
+            'correo' => 'nullable|max:100',
+            'fecha_nacimiento' => 'required|date_format:Y-m-d',
+            'dpi' => 'nullable|max:255',
+            'alfabeta' => 'required|max:50',
+            'estado_civil' => 'nullable|max:50',
         ]);
 
         cliente::create($request->all());
@@ -68,7 +74,9 @@ class ClienteController extends Controller
      */
     public function show(cliente $cliente)
     {
-        $citas = $cliente->citas;
+        $citas = $cliente->citas()->where('estado', '=', 2)
+            ->orderBy('fecha_atendida', 'DESC')
+            ->get();
 
         return view('cliente.ficha_clinica', compact('cliente', 'citas'));
     }
@@ -94,13 +102,16 @@ class ClienteController extends Controller
     public function update(Request $request, cliente $cliente)
     {
         $this->validate($request, [
+            'genero' => 'required',
             'nombre' => 'required|max:100',
             'apellido' => 'required|max:100',
             'direccion' => 'required|max:100',
             'telefono' => 'required|max:100',
-            'correo' => 'required|max:100',
-            'fecha_nacimiento' => 'required',
-            'dpi' => 'required|max:255',
+            'correo' => 'nullable|max:100',
+            'fecha_nacimiento' => 'required|date_format:Y-m-d',
+            'dpi' => 'nullable|max:255',
+            'alfabeta' => 'required|max:50',
+            'estado_civil' => 'nullable|max:50',
         ]);
 
         $cliente->update($request->all());

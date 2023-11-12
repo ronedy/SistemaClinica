@@ -1,4 +1,4 @@
-# SISTEMA CLINICA
+# Sistema Clinica
 
 ## Paper Dashboard
 [Paper Dashboard Installation](https://paper-dashboard-laravel.creative-tim.com/docs/getting-started/laravel-setup.html?_ga=2.65654574.1681493881.1590280839-1629143006.1589900399)

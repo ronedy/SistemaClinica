@@ -16,50 +16,57 @@
                         </div>
                     </div>
                     <div class="card-body ">
+                        @if (session('mensaje'))
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="alert alert-success">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <i class="material-icons">close</i>
+                                        </button>
+                                        <span>{{ session('mensaje') }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                        @if ($errors->any())
+                            <div class="card-body ">
+                                <div class="alert alert-danger">
+                                    <ul>
+                                        @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                            </div>
+                        @endif
                         <!--<canvas id=chartHours width="400" height="100"></canvas>-->
                         <div class="table-responsive">
                             <table class="table" id="tabla">
                                 <thead class=" text-primary">
-                                    <th>
-                                        Fecha citada
-                                    </th>
-                                    <th>
-                                        Fecha atendida
-                                    </th>
-                                    <th>
-                                        Paciente
-                                    </th>
-                                    <th>
-                                        Médico
-                                    </th>
-                                    <th>
-                                        Enfermedad
-                                    </th>
-                                    <th class="text-right">
-                                        Operaciones
-                                    </th>
+                                    <th>Fecha citada</th>
+                                    <th>Paciente</th>
+                                    <th>Médico</th>
+                                    <th class="text-right">Operaciones</th>
                                 </thead>
                                 <tbody>
                                     @foreach($citas as $cita)
                                     <tr>
-                                        <td>{{ date('d/m/Y', strtotime($cita->fecha_citada)) }}</td>
-                                        <td>{{ $cita->fecha_atendida != '' ? $cita->fecha_atendida : 'Sin atender' }}</td>
+                                        <td>{{ date('d/m/Y', strtotime($cita->fecha_citada)) }} {{ $cita->hora_citada }}</td>
                                         <td>{{ $cita->cliente->nombre . ' ' . $cita->cliente->apellido }}</td>
                                         <td>{{ $cita->doctor->nombre . ' ' . $cita->doctor->apellido }}</td>
-                                        <td>{{ $cita->enfermedad ? $cita->enfermedad->descripcion : '' }}</td>
                                         <td class="text-right">
                                             <form action="{{ route('cita.destroy', $cita) }}" method="post">
                                                 @csrf
                                                 @method('delete')
                                                 @if ( $cita->estado != 2 )
-                                                <a rel="tooltip" class="btn btn-info btn-link" href="{{ route('cita.atender', $cita) }}" data-original-title="" title="">
+                                                <a rel="tooltip" class="btn btn-info" href="{{ route('cita.atender', $cita) }}" data-original-title="" title="">
                                                     Atender
                                                 </a>
-                                                <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('cita.edit', $cita) }}" data-original-title="" title="">
+                                                <a rel="tooltip" class="btn btn-success" href="{{ route('cita.edit', $cita) }}" data-original-title="" title="">
                                                     Editar
                                                 </a>
                                                 @endif
-                                                <button type="button" class="btn btn-danger btn-link" data-original-title="" title="" onclick="confirm('{{ __("¿Este proceso no puede revertirse, estás seguro?") }}') ? this.parentElement.submit() : ''">
+                                                <button type="button" class="btn btn-danger" data-original-title="" title="" onclick="confirm('{{ __("¿Este proceso no puede revertirse, estás seguro?") }}') ? this.parentElement.submit() : ''">
                                                     Eliminar
                                                 </button>
                                             </form>

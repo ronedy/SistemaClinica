@@ -47,10 +47,10 @@
                                             <form action="{{ route('especialidad.destroy', $especialidad) }}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('especialidad.edit', $especialidad) }}" data-original-title="" title="">
+                                                <a rel="tooltip" class="btn btn-success" href="{{ route('especialidad.edit', $especialidad) }}" data-original-title="" title="">
                                                     Editar
                                                 </a>
-                                                <button type="button" class="btn btn-danger btn-link" data-original-title="" title="" onclick="confirm('{{ __("¿Este proceso no puede revertirse, estás seguro?") }}') ? this.parentElement.submit() : ''">
+                                                <button type="button" class="btn btn-danger" data-original-title="" title="" onclick="confirm('{{ __("¿Este proceso no puede revertirse, estás seguro?") }}') ? this.parentElement.submit() : ''">
                                                     Eliminar
                                                 </button>
                                             </form>
@@ -59,6 +59,11 @@
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="py-4">
+                            <nav class="d-flex justify-content-end" aria-label="...">
+                                {{ $especialidades->appends(request()->query())->links('pagination::bootstrap-4') }}
+                            </nav>
                         </div>
                     </div>
                 </div>

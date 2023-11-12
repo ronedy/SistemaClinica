@@ -24,7 +24,6 @@ class HomeController extends Controller
     public function index()
     {
         $citas = cita::where('estado', '=', 1)
-                ->where('fecha_citada', '>=', now()->format('Y-m-d'))
                 ->get();
 
         return view('pages.dashboard', compact('citas'));

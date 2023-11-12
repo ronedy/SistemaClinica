@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get('/', function () {
     //return view('welcome');
     //return view('pages.dashboard');
@@ -60,7 +62,13 @@ Route::group(['middleware' => 'auth'], function () {
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
     Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);
-    
+
+    Route::prefix('autocomplete')->group(function(){
+        Route::get('especialidades', 'AutoCompleteController@especialidades')->name('autocomplete.especialidades');
+        Route::get('pacientes', 'AutoCompleteController@pacientes')->name('autocomplete.pacientes');
+    });
+
+    Route::resource('usuarios', 'UsuarioController')->except(['show']);
 
     Route::resource('cliente', 'ClienteController');
     Route::resource('especialidad', 'EspecialidadController');
@@ -69,8 +77,19 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('asignacionSeguro', 'AsignacionClienteSeguroController');
     Route::resource('enfermedad', 'EnfermedadController');
     Route::resource('cita', 'CitaController')->parameters(['cita' => 'cita']);
-    Route::get('cita/{cita}/atnder', 'CitaController@atenderCita')->name('cita.atender');
+    Route::get('cita/{cita}/atender', 'CitaController@atenderCita')->name('cita.atender');
+    Route::put('cita/{cita}/guardar-atender', 'CitaController@guardarAtenderCita')->name('cita.guardar-atender');
     Route::resource('bitacora', 'BitacoraController');
+
+    Route::prefix('api/auth')->group(function(){
+        Route::get('cliente/{id}/historial-control-parental', 'Api\ClienteController@historialControlParental')->name('api.auth.cliente.historial-control-parental');
+    });
+
+    Route::prefix('export/pdf')->group(function(){
+        Route::post('cita/ficha', 'DocumentoController@exportPDFCitaFicha')->name('export.pdf.cita.ficha');
+        Route::post('cita/receta', 'DocumentoController@exportPDFRecetaCita')->name('export.pdf.cita.receta');
+        Route::post('cliente/expediente', 'DocumentoController@exportPDFExpedienteCliente')->name('export.pdf.cliente.expediente');
+    });
 });
 
 Route::group(['middleware' => 'auth'], function () {

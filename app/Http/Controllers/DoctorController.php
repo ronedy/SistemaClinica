@@ -16,7 +16,10 @@ class DoctorController extends Controller
      */
     public function index()
     {
-        $doctores = doctor::where('estado', 1)->get(); // para clientes solo activos
+        $doctores = doctor::where('estado', 1)
+            ->orderBy('nombre', 'ASC')
+            ->paginate(10);
+
         return view('doctor.index', compact('doctores'));
     }
 
@@ -40,12 +43,13 @@ class DoctorController extends Controller
     {
             // validamos todos los camppos
         $this->validate($request, [
+            'id_especialidad' => 'required|numeric',
             'nombre' => 'required|max:100',
             'apellido' => 'required|max:100',
             'direccion' => 'required|max:100',
             'telefono' => 'required|max:100',
-            'correo' => 'required|max:100',
-            'fecha_nacimiento' => 'required'
+            'correo' => 'nullable|max:100',
+            'fecha_nacimiento' => 'nullable|date_format:Y-m-d'
         ]);
 
         doctor::create($request->all()); // se guardan los name de la vista a las columnas que se llamen igual
@@ -92,12 +96,13 @@ class DoctorController extends Controller
     public function update(Request $request, doctor $doctor)
     {
         $this->validate($request, [
+            'id_especialidad' => 'required|numeric',
             'nombre' => 'required|max:100',
             'apellido' => 'required|max:100',
             'direccion' => 'required|max:100',
             'telefono' => 'required|max:100',
-            'correo' => 'required|max:100',
-            'fecha_nacimiento' => 'required'
+            'correo' => 'nullable|max:100',
+            'fecha_nacimiento' => 'nullable|date_format:Y-m-d'
         ]);
 
         $doctor->update($request->all());

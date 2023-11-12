@@ -6,22 +6,18 @@
     <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('paper') }}/img/apple-icon.png">
     <link rel="icon" type="image/png" href="{{ asset('paper') }}/img/favicon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="csrf-token" content="{{ csrf_token() }}"
 
     <!-- Extra details for Live View on GitHub Pages -->
-    <!-- Canonical SEO -->
-    <link rel="canonical" href="https://www.creative-tim.com/product/paper-dashboard-laravel" />
     <!--  Social tags      -->
     <meta name="keywords" content="sistema, clinica, gestion">
-    <meta name="description" content="SISTEMA CLINICA">
+    <meta name="description" content="Sistema clinica">
     <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="SISTEMA CLINICA">
+    <meta itemprop="name" content="Sistema clinica">
     <meta itemprop="description" content="Sistema clincia">
 
-    <meta itemprop="image" content="https://s3.amazonaws.com/creativetim_bucket/products/209/opt_pd_laravel_thumbnail.jpg">
-
-
     <title>
-        {{ __('SISTEMA CLINICA') }}
+        {{ __('Sistema Clinica') }}
     </title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport' />
@@ -34,13 +30,8 @@
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="{{ asset('paper') }}/demo/demo.css" rel="stylesheet" />
 
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-NKDMSK6');</script>
-    <!-- End Google Tag Manager -->
+    {{-- <script src="{{ asset('js/jquery/jquery.js') }}"></script> --}}
+    <link href="{{  asset('js/select_2/select2.min.css') }}" rel="stylesheet" />
 </head>
 
 <body class="{{ $class }}">
@@ -48,12 +39,12 @@
     <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6"
         height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <!-- End Google Tag Manager (noscript) -->
-    
+
     @auth()
         @include('layouts.page_templates.auth')
         @include('layouts.navbars.fixed-plugin')
     @endauth
-    
+
     @guest
         @include('layouts.page_templates.guest')
     @endguest
@@ -74,8 +65,10 @@
     <!-- Paper Dashboard DEMO methods, don't include it in your project! -->
     <script src="{{ asset('paper') }}/demo/demo.js"></script>
     <!-- Sharrre libray -->
-    <script src="../assets/demo/jquery.sharrre.js"></script>
-    
+    {{-- <script src="../assets/demo/jquery.sharrre.js"></script> --}}
+    <script src="{{ asset('js/select_2/select2.min.js') }}"></script>
+    <script src="{{ asset('js/select_2/es.min.js') }}"></script>
+
     @stack('scripts')
 
     @include('layouts.navbars.fixed-plugin-js')

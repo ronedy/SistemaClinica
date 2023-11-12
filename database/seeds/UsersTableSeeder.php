@@ -13,6 +13,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
+            'id' => 1,
             'name' => 'admin',
             'apellido' => 'admin',
             'email' => 'admin@admin.com',
@@ -20,7 +21,8 @@ class UsersTableSeeder extends Seeder
             'username' => 'admin',
             'password' => Hash::make('admin2023'),
             'created_at' => now(),
-            'updated_at' => now()
+            'updated_at' => now(),
+            'id_rol' => 1,
         ]);
     }
 }

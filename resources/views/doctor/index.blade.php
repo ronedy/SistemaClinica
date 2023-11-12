@@ -32,45 +32,44 @@
                         <div class="table-responsive">
                             <table class="table">
                                 <thead class=" text-primary">
-                                    <th>
-                                        Nombre
-                                    </th>
-                                    <th>
-                                        Dirección
-                                    </th>
-                                    <th>
-                                        Télefono
-                                    </th>
-                                    <th>
-                                        Correo
-                                    </th>
-                                    <th class="text-right">
-                                        Operaciones
-                                    </th>
+                                    <th>Especialidad</th>
+                                    <th>Nombre</th>
+                                    <th>Dirección</th>
+                                    <th>Télefono</th>
+                                    <th>Correo</th>
+                                    <th class="text-right">Operaciones</th>
                                 </thead>
                                 <tbody>
                                     @foreach($doctores as $doctor)
                                     <tr>
+                                        <td>{{ $doctor->especialidad ? $doctor->especialidad->descripcion : '' }}</td>
                                         <td>{{ $doctor->nombre }} {{ $doctor->apellido }}</td>
                                         <td>{{ $doctor->direccion }}</td>
                                         <td>{{ $doctor->telefono }}</td>
                                         <td>{{ $doctor->correo }}</td>
                                         <td class="text-right">
+                                            <a rel="tooltip" class="btn btn-success" href="{{ route('doctor.edit', $doctor) }}" data-original-title="" title="">
+                                                Editar
+                                            </a>
+                                            @if ( auth()->user()->id_rol == 1)
                                             <form action="{{ route('doctor.destroy', $doctor) }}" method="post">
                                                 @csrf
                                                 @method('delete')
-                                                <a rel="tooltip" class="btn btn-success btn-link" href="{{ route('doctor.edit', $doctor) }}" data-original-title="" title="">
-                                                    Editar
-                                                </a>
-                                                <button type="button" class="btn btn-danger btn-link" data-original-title="" title="" onclick="confirm('{{ __("¿Este proceso no puede revertirse, estás seguro?") }}') ? this.parentElement.submit() : ''">
+                                                <button type="button" class="btn btn-danger" data-original-title="" title="" onclick="confirm('{{ __("¿Este proceso no puede revertirse, estás seguro?") }}') ? this.parentElement.submit() : ''">
                                                     Eliminar
                                                 </button>
                                             </form>
+                                            @endif
                                         </td>
                                     </tr>
                                     @endforeach
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="py-4">
+                            <nav class="d-flex justify-content-end" aria-label="...">
+                                {{ $doctores->appends(request()->query())->links('pagination::bootstrap-4') }}
+                            </nav>
                         </div>
                     </div>
                 </div>

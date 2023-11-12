@@ -14,9 +14,32 @@ class BitacoraController extends Controller
      */
     public function index()
     {
-        $bitacoras = bitacora::where('estado', 1)->get();
+        if ( auth()->user()->id_rol == 2 ){
+            return redirect()->route('home')->withErrors('No tienes permiso para acceder.');
+        }
 
-        return view('bitacora.index', compact('bitacoras'));
+        $fechaInicio = request('fecha_inicio');
+        $fechaFin = request('fecha_fin');
+
+        $bitacorasQuery = bitacora::where('estado', 1);
+
+        if (!empty($fechaInicio) && !empty($fechaFin)) {
+            $bitacorasQuery->whereBetween('fecha', [$fechaInicio, $fechaFin]);
+        } elseif (!empty($fechaInicio)) {
+            $bitacorasQuery->where('fecha', '>=', $fechaInicio);
+        } elseif (!empty($fechaFin)) {
+            $bitacorasQuery->where('fecha', '<=', $fechaFin);
+        }
+
+        $bitacoras = $bitacorasQuery
+            ->orderBy('id', 'desc')
+            ->paginate(10);
+
+        return view('bitacora.index', compact(
+            'bitacoras',
+            'fechaInicio',
+            'fechaFin'
+        ));
     }
 
     /**

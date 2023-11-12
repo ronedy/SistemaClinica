@@ -16,7 +16,10 @@ class EspecialidadController extends Controller
      */
     public function index()
     {
-        $especialidades = especialidad::where('estado', 1)->get(); // para clientes solo activos
+        $especialidades = especialidad::where('estado', 1)
+            ->orderBy('descripcion', 'ASC')
+            ->paginate(10);
+
         return view('especialidad.index', compact('especialidades'));
     }
 
